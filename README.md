@@ -4,6 +4,8 @@ Landing page de una cafetería de barrio, ahora con **formulario de contacto y b
 sugerencias** que guarda cada mensaje en **PostgreSQL**. El sitio se despliega en
 **Vercel** como sitio estático + una función serverless que escribe en la base.
 
+**Sitio publicado:** <https://cafe-aroma-y-codigo.vercel.app>
+
 ## Stack
 
 | Capa | Tecnología |
