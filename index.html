@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Café Aroma &amp; Código | Café de especialidad y espacio para crear</title>
+  <meta name="description" content="Cafetería de barrio con tueste propio, repostería artesanal y un espacio cómodo para leer, conversar o trabajar. Consulta la carta, los horarios y reserva tu mesa.">
+  <meta name="theme-color" content="#2A1A12">
+  <meta name="color-scheme" content="light">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
+
+  <header class="header" id="inicio">
+    <div class="container header__inner">
+      <a class="brand" href="#inicio" aria-label="Aroma &amp; Código, volver al inicio">
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 9h12v6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9Z"/>
+            <path d="M16 10h2.5a2.5 2.5 0 0 1 0 5H16"/>
+            <path d="M7 5c0-.8.7-1.2.7-2M11 5c0-.8.7-1.2.7-2"/>
+          </svg>
+        </span>
+        <span class="brand__name">Aroma <span class="brand__amp">&amp;</span> Código</span>
+      </a>
+
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Abrir menú de navegación">
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+      </button>
+
+      <nav class="nav" id="primary-nav" aria-label="Navegación principal">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="#carta">Carta</a></li>
+          <li><a class="nav__link" href="#nosotros">Nosotros</a></li>
+          <li><a class="nav__link" href="#testimonios">Testimonios</a></li>
+          <li><a class="nav__link" href="#contacto">Contacto</a></li>
+        </ul>
+        <a class="btn btn--primary nav__cta" href="#contacto">Reservar mesa</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container hero__grid">
+        <div class="hero__content">
+          <p class="eyebrow"><span class="eyebrow__dot" aria-hidden="true"></span> Café de especialidad · Barrio del Arte</p>
+          <h1 class="hero__title" id="hero-title">Buen café, buena compañía, mejores <em>ideas</em>.</h1>
+          <p class="hero__lede">
+            Tostamos nuestro propio grano, horneamos cada mañana y servimos en un espacio
+            pensado para quedarse: leer, conversar, trabajar o simplemente mirar pasar la tarde.
+          </p>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#carta">Ver la carta</a>
+            <a class="btn btn--ghost" href="#contacto">Reservar mesa</a>
+          </div>
+
+          <dl class="hero__stats">
+            <div class="stat">
+              <dt>Tueste</dt>
+              <dd>Propio</dd>
+            </div>
+            <div class="stat">
+              <dt>Wi-Fi</dt>
+              <dd>300 Mbps</dd>
+            </div>
+            <div class="stat">
+              <dt>Abiertos</dt>
+              <dd>Desde 2018</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="hero__visual">
+          <div class="hero__card">
+            <svg class="cup" viewBox="0 0 360 360" role="img" aria-label="Ilustración de una taza de café con leche humeante sobre un plato">
+              <defs>
+                <linearGradient id="cupBody" x1="0" y1="0" x2="0.4" y2="1">
+                  <stop offset="0" stop-color="#FFFDF9"/>
+                  <stop offset="1" stop-color="#E7D6BE"/>
+                </linearGradient>
+                <linearGradient id="coffeeSurface" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#6A4028"/>
+                  <stop offset="1" stop-color="#2A1A12"/>
+                </linearGradient>
+                <linearGradient id="steam" x1="0" y1="1" x2="0" y2="0">
+                  <stop offset="0" stop-color="#F3E3CE" stop-opacity="0.75"/>
+                  <stop offset="1" stop-color="#F3E3CE" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+
+              <ellipse cx="180" cy="302" rx="116" ry="17" fill="#0E0704" opacity="0.35"/>
+              <ellipse cx="180" cy="286" rx="104" ry="19" fill="#F1E2CD"/>
+              <ellipse cx="180" cy="282" rx="86" ry="14" fill="#DCC7AA"/>
+
+              <path d="M282 166c30 0 40 17 40 34s-12 33-38 33" fill="none" stroke="url(#cupBody)" stroke-width="15" stroke-linecap="round"/>
+
+              <path d="M78 140h204l-17 118c-2.4 17-16.6 29-33.6 29H128.6c-17 0-31.2-12-33.6-29L78 140Z" fill="url(#cupBody)"/>
+              <path d="M78 140h204l-3 22H81l-3-22Z" fill="#FFFFFF" opacity="0.35"/>
+
+              <ellipse cx="180" cy="142" rx="102" ry="25" fill="#F6EBDC"/>
+              <ellipse cx="180" cy="145" rx="88" ry="18" fill="url(#coffeeSurface)"/>
+
+              <path d="M180 133c11-9 26-4 26 7 0 11-15 17-26 24-11-7-26-13-26-24 0-11 15-16 26-7Z" fill="#F3E6D4" opacity="0.9"/>
+
+              <path d="M140 110c-12-16 12-26 0-44" fill="none" stroke="url(#steam)" stroke-width="8" stroke-linecap="round"/>
+              <path d="M180 100c-13-18 13-29 0-50" fill="none" stroke="url(#steam)" stroke-width="8" stroke-linecap="round"/>
+              <path d="M220 110c-12-16 12-26 0-44" fill="none" stroke="url(#steam)" stroke-width="8" stroke-linecap="round"/>
+            </svg>
+          </div>
+
+          <p class="float float--wifi">
+            <span class="float__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M2.5 8.5a15 15 0 0 1 19 0"/><path d="M5.5 12a10.5 10.5 0 0 1 13 0"/><path d="M8.5 15.5a6 6 0 0 1 7 0"/><circle cx="12" cy="19" r="1.2" fill="currentColor" stroke="none"/></svg>
+            </span>
+            Wi-Fi de fibra
+            <span class="float__sub">300 Mbps simétricos</span>
+          </p>
+
+          <p class="float float--roast">
+            <span class="float__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3c4 3 6 6 6 9a6 6 0 0 1-12 0c0-3 2-6 6-9Z"/><path d="M12 8c1.8 2 2.6 3.6 2.6 5"/></svg>
+            </span>
+            Tueste propio
+            <span class="float__sub">Lotes pequeños</span>
+          </p>
+
+          <p class="float float--open">
+            <span class="float__dot" aria-hidden="true"></span>
+            Abierto hoy
+            <span class="float__sub">07:30 – 20:00</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Servicios -->
+    <section class="features" aria-label="Servicios del local">
+      <div class="container">
+        <ul class="features__list">
+          <li class="feature reveal">
+            <span class="feature__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M2.5 8.5a15 15 0 0 1 19 0"/><path d="M5.5 12a10.5 10.5 0 0 1 13 0"/><path d="M8.5 15.5a6 6 0 0 1 7 0"/><circle cx="12" cy="19" r="1.2" fill="currentColor" stroke="none"/></svg>
+            </span>
+            <div>
+              <h2 class="feature__title">Wi-Fi de fibra</h2>
+              <p class="feature__text">300 Mbps simétricos y red de invitados.</p>
+            </div>
+          </li>
+          <li class="feature reveal">
+            <span class="feature__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/></svg>
+            </span>
+            <div>
+              <h2 class="feature__title">Enchufes en cada mesa</h2>
+              <p class="feature__text">Trabaja tranquilo, sin pelear por el tomacorriente.</p>
+            </div>
+          </li>
+          <li class="feature reveal">
+            <span class="feature__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="8" r="2"/><circle cx="17" cy="8" r="2"/><path d="M4 17c0-3 2.5-5 5.5-5S15 14 15 17"/><path d="M14 12.5c2.8.3 5 2.2 5 4.5"/></svg>
+            </span>
+            <div>
+              <h2 class="feature__title">Pet friendly</h2>
+              <p class="feature__text">Agua fresca y galletas para tu mascota.</p>
+            </div>
+          </li>
+          <li class="feature reveal">
+            <span class="feature__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1.2 11a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+            </span>
+            <div>
+              <h2 class="feature__title">Para llevar</h2>
+              <p class="feature__text">10 % de descuento con vaso reutilizable.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Carta -->
+    <section class="section menu" id="carta" aria-labelledby="menu-title">
+      <div class="container">
+        <header class="section__header">
+          <p class="eyebrow">La carta</p>
+          <h2 class="section__title" id="menu-title">Lo que sale de nuestra barra</h2>
+          <p class="section__lede">
+            Granos de productores locales, leche de tambo de la zona y repostería horneada a diario.
+            Todo se puede pedir para llevar.
+          </p>
+        </header>
+
+        <div class="menu__columns">
+          <article class="menu__group reveal" aria-labelledby="menu-coffee">
+            <h3 class="menu__group-title" id="menu-coffee">Cafés de especialidad</h3>
+            <ul class="menu__list">
+              <li class="menu__item">
+                <div class="menu__row">
+                  <h4 class="menu__name">Espresso doble</h4>
+                  <span class="menu__price">$3.200</span>
+                </div>
+                <p class="menu__desc">Blend de la casa con notas de cacao y panela.</p>
+              </li>
+              <li class="menu__item">
+                <div class="menu__row">
+                  <h4 class="menu__name">Flat white</h4>
+                  <span class="menu__price">$4.100</span>
+                </div>
+                <p class="menu__desc">Doble shot y leche microtexturizada.</p>
+              </li>
+              <li class="menu__item">
+                <div class="menu__row">
+                  <h4 class="menu__name">Cold brew <span class="chip">Vegano</span></h4>
+                  <span class="menu__price">$4.300</span>
+                </div>
+                <p class="menu__desc">Dieciocho horas de extracción en frío.</p>
+              </li>
+              <li class="menu__item">
+                <div class="menu__row">
+                  <h4 class="menu__name">Mocha de la casa</h4>
+                  <span class="menu__price">$4.800</span>
+                </div>
+                <p class="menu__desc">Chocolate al 70 % y crema de avellanas.</p>
+              </li>
+            </ul>
+          </article>
+
+          <article class="menu__group reveal" aria-labelledby="menu-bakery">
+            <h3 class="menu__group-title" id="menu-bakery">Repostería</h3>
+            <ul class="menu__list">
+              <li class="menu__item">
+                <div class="menu__row">
+                  <h4 class="menu__name">Croissant de mantequilla</h4>
+                  <span class="menu__price">$2.900</span>
+                </div>
+                <p class="menu__desc">Laminado a mano, horneado cada mañana.</p>
+              </li>
+              <li class="menu__item">
+                <div class="menu__row">
+                  <h4 class="menu__name">Rollo de canela <span class="chip">Vegano</span></h4>
+                  <span class="menu__price">$3.400</span>
+                </div>
+                <p class="menu__desc">Masa de coco y glaseado de azúcar mascabo.</p>
+              </li>
+              <li class="menu__item">
+                <div class="menu__row">
+                  <h4 class="menu__name">Tarta de limón</h4>
+                  <span class="menu__price">$4.200</span>
+                </div>
+                <p class="menu__desc">Curd de limón de estación y merengue suizo.</p>
+              </li>
+              <li class="menu__item">
+                <div class="menu__row">
+                  <h4 class="menu__name">Banana bread <span class="chip">Sin gluten</span></h4>
+                  <span class="menu__price">$3.100</span>
+                </div>
+                <p class="menu__desc">Harina de almendra, nueces y canela.</p>
+              </li>
+            </ul>
+          </article>
+
+          <article class="menu__group reveal" aria-labelledby="menu-food">
+            <h3 class="menu__group-title" id="menu-food">Salados</h3>
+            <ul class="menu__list">
+              <li class="menu__item">
+                <div class="menu__row">
+                  <h4 class="menu__name">Tostada de palta <span class="chip">Vegano</span></h4>
+                  <span class="menu__price">$5.400</span>
+                </div>
+                <p class="menu__desc">Pan de masa madre, palta y semillas tostadas.</p>
+              </li>
+              <li class="menu__item">
+                <div class="menu__row">
+                  <h4 class="menu__name">Sándwich de pollo al pesto</h4>
+                  <span class="menu__price">$6.200</span>
+                </div>
+                <p class="menu__desc">Pollo de campo, pesto de albahaca y rúcula.</p>
+              </li>
+              <li class="menu__item">
+                <div class="menu__row">
+                  <h4 class="menu__name">Focaccia de tomate</h4>
+                  <span class="menu__price">$5.800</span>
+                </div>
+                <p class="menu__desc">Tomate confitado, orégano y aceite de oliva.</p>
+              </li>
+              <li class="menu__item">
+                <div class="menu__row">
+                  <h4 class="menu__name">Bowl de temporada <span class="chip">Vegetariano</span></h4>
+                  <span class="menu__price">$6.900</span>
+                </div>
+                <p class="menu__desc">Granos, verduras asadas y aderezo de tahini.</p>
+              </li>
+            </ul>
+          </article>
+        </div>
+
+        <p class="menu__note">
+          <strong>Alergias e intolerancias:</strong> consulta con nuestro equipo por la lista completa de ingredientes.
+          Ofrecemos leche vegetal sin costo adicional.
+        </p>
+      </div>
+    </section>
+
+    <!-- Nosotros -->
+    <section class="section about" id="nosotros" aria-labelledby="about-title">
+      <div class="container about__grid">
+        <div class="about__content">
+          <p class="eyebrow">Nosotros</p>
+          <h2 class="section__title" id="about-title">Un café de barrio con alma de estudio</h2>
+          <p class="about__text">
+            Abrimos en 2018 con una tostadora de segunda mano y una idea simple: que el café
+            de especialidad no sea un lujo ni un misterio. Hoy tostamos cada semana lotes
+            pequeños, trabajamos con productores de la región y servimos sin apuro.
+          </p>
+          <p class="about__text">
+            La mesa larga del fondo nació para las tardes de trabajo compartido; el rincón de
+            los libros, para las que necesitan silencio. Cada detalle del local está pensado
+            para que te quedes un rato más de lo que habías planeado.
+          </p>
+
+          <ul class="about__values">
+            <li class="about__value">
+              <span class="about__check" aria-hidden="true">✓</span>
+              Tueste propio en lotes pequeños, cada semana.
+            </li>
+            <li class="about__value">
+              <span class="about__check" aria-hidden="true">✓</span>
+              Productores y proveedores de la zona.
+            </li>
+            <li class="about__value">
+              <span class="about__check" aria-hidden="true">✓</span>
+              Envases compostables y descuento por vaso reutilizable.
+            </li>
+          </ul>
+        </div>
+
+        <div class="about__visual" aria-hidden="true">
+          <div class="about__panel about__panel--beans">
+            <svg viewBox="0 0 200 200" role="presentation">
+              <defs>
+                <g id="bean">
+                  <ellipse cx="0" cy="0" rx="11" ry="17"/>
+                  <path d="M0 -16c5 9 5 23 0 32"/>
+                </g>
+              </defs>
+              <g fill="none" stroke="#F3E6D4" stroke-width="1.8" stroke-linecap="round">
+                <use href="#bean" x="46" y="52" transform="rotate(-26 46 52)" opacity="0.85"/>
+                <use href="#bean" x="102" y="38" transform="rotate(14 102 38)" opacity="0.6"/>
+                <use href="#bean" x="154" y="66" transform="rotate(-38 154 66)" opacity="0.75"/>
+                <use href="#bean" x="66" y="118" transform="rotate(9 66 118)" opacity="0.55"/>
+                <use href="#bean" x="122" y="102" transform="rotate(-18 122 102)" opacity="0.85"/>
+                <use href="#bean" x="94" y="166" transform="rotate(32 94 166)" opacity="0.7"/>
+                <use href="#bean" x="160" y="148" transform="rotate(-8 160 148)" opacity="0.5"/>
+              </g>
+            </svg>
+          </div>
+          <div class="about__panel about__panel--quote">
+            <p class="about__quote">“El mejor café del barrio, y el único donde te recuerdan cómo lo tomas.”</p>
+            <p class="about__quote-source">— Reseña de un vecino</p>
+          </div>
+          <p class="about__badge">
+            <strong>8</strong>
+            años de barrio
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonios -->
+    <section class="section testimonials" id="testimonios" aria-labelledby="testimonials-title">
+      <div class="container">
+        <header class="section__header section__header--center">
+          <p class="eyebrow">Testimonios</p>
+          <h2 class="section__title" id="testimonials-title">Quienes ya son de la casa</h2>
+        </header>
+
+        <ul class="testimonials__grid">
+          <li class="testimonial reveal">
+            <figure>
+              <p class="testimonial__stars" role="img" aria-label="Calificación: 5 de 5 estrellas">★★★★★</p>
+              <blockquote class="testimonial__quote">
+                Vengo a trabajar tres veces por semana: el Wi-Fi vuela, las mesas son cómodas
+                y el flat white es el mejor del barrio.
+              </blockquote>
+              <figcaption class="testimonial__author">
+                <span class="avatar" aria-hidden="true">LM</span>
+                <span>
+                  <strong>Lucía M.</strong>
+                  <span class="testimonial__role">Diseñadora UX</span>
+                </span>
+              </figcaption>
+            </figure>
+          </li>
+
+          <li class="testimonial reveal">
+            <figure>
+              <p class="testimonial__stars" role="img" aria-label="Calificación: 5 de 5 estrellas">★★★★★</p>
+              <blockquote class="testimonial__quote">
+                El rollo de canela vegano es un peligro para mi dieta. El trato, siempre cálido
+                y sin apuro: se nota que cuidan el lugar.
+              </blockquote>
+              <figcaption class="testimonial__author">
+                <span class="avatar" aria-hidden="true">AP</span>
+                <span>
+                  <strong>Andrés P.</strong>
+                  <span class="testimonial__role">Vecino del barrio</span>
+                </span>
+              </figcaption>
+            </figure>
+          </li>
+
+          <li class="testimonial reveal">
+            <figure>
+              <p class="testimonial__stars" role="img" aria-label="Calificación: 5 de 5 estrellas">★★★★★</p>
+              <blockquote class="testimonial__quote">
+                Reservamos la mesa larga para una jornada de equipo y nos trataron de diez.
+                Volvemos el mes que viene.
+              </blockquote>
+              <figcaption class="testimonial__author">
+                <span class="avatar" aria-hidden="true">CR</span>
+                <span>
+                  <strong>Camila R.</strong>
+                  <span class="testimonial__role">Product Manager</span>
+                </span>
+              </figcaption>
+            </figure>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Contacto -->
+    <section class="section contact" id="contacto" aria-labelledby="contact-title">
+      <div class="container contact__grid">
+        <div class="contact__info">
+          <p class="eyebrow eyebrow--light">Visítanos</p>
+          <h2 class="section__title section__title--light" id="contact-title">Nos vemos en el barrio</h2>
+          <p class="contact__lede">
+            Estamos a dos cuadras de la plaza. Si vienes con grupo, avísanos y te guardamos
+            la mesa larga.
+          </p>
+
+          <address class="contact__address">
+            <p>
+              <span class="contact__label">Dirección</span>
+              Av. Central 142, Barrio del Arte
+            </p>
+            <p>
+              <span class="contact__label">Teléfono</span>
+              <a href="tel:+15550123456">(555) 012-3456</a>
+            </p>
+            <p>
+              <span class="contact__label">Correo</span>
+              <a href="mailto:hola@aromaandcodigo.cafe">hola@aromaandcodigo.cafe</a>
+            </p>
+          </address>
+
+          <div class="hours">
+            <h3 class="hours__title">Horarios</h3>
+            <table class="hours__table">
+              <caption class="visually-hidden">Horario de atención del local por día</caption>
+              <tbody>
+                <tr>
+                  <th scope="row">Lunes a jueves</th>
+                  <td>07:30 – 20:00</td>
+                </tr>
+                <tr>
+                  <th scope="row">Viernes</th>
+                  <td>07:30 – 22:00</td>
+                </tr>
+                <tr>
+                  <th scope="row">Sábado</th>
+                  <td>09:00 – 22:00</td>
+                </tr>
+                <tr>
+                  <th scope="row">Domingo</th>
+                  <td>09:00 – 18:00</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <form class="contact__form" id="contact-form" action="/api/contact" method="post" aria-labelledby="form-title">
+          <h3 class="form__title" id="form-title">Contacto y sugerencias</h3>
+          <p class="form__hint">Reservas, consultas o ideas para mejorar: leemos todo y respondemos en el día.</p>
+
+          <div class="field">
+            <label class="field__label" for="motivo">Motivo</label>
+            <select class="field__input" id="motivo" name="motivo" required>
+              <option value="reserva">Reserva de mesa</option>
+              <option value="consulta" selected>Consulta general</option>
+              <option value="sugerencia">Sugerencia</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="nombre">Nombre y apellido</label>
+            <input class="field__input" type="text" id="nombre" name="nombre" autocomplete="name" placeholder="Ana Gómez" minlength="2" maxlength="80" required>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="correo">Correo electrónico</label>
+            <input class="field__input" type="email" id="correo" name="correo" autocomplete="email" placeholder="ana@ejemplo.com" maxlength="120" required>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="telefono">Teléfono <span class="field__optional">(opcional)</span></label>
+            <input class="field__input" type="tel" id="telefono" name="telefono" autocomplete="tel" placeholder="(555) 012-3456" maxlength="30">
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="mensaje">Mensaje</label>
+            <textarea class="field__input field__input--textarea" id="mensaje" name="mensaje" rows="5" placeholder="Contanos qué necesitás o qué podemos mejorar." minlength="10" maxlength="1000" aria-describedby="mensaje-hint" required></textarea>
+            <p class="field__hint" id="mensaje-hint">Entre 10 y 1000 caracteres. No incluyas datos sensibles.</p>
+          </div>
+
+          <div class="hp" aria-hidden="true">
+            <label for="website">No completar este campo</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+          </div>
+
+          <label class="checkbox">
+            <input type="checkbox" id="consent" name="consent" required>
+            <span>Acepto que Aroma &amp; Código use estos datos únicamente para responder mi mensaje.</span>
+          </label>
+
+          <div class="form__feedback" id="form-feedback" role="status" aria-live="polite" data-state=""></div>
+
+          <button class="btn btn--primary btn--block" type="submit" id="form-submit">Enviar mensaje</button>
+
+          <p class="form__note">
+            Los datos se guardan en una base de datos PostgreSQL y no se comparten con terceros.
+          </p>
+          <noscript>
+            <p class="form__note">
+              Sin JavaScript el formulario sigue funcionando: te devolveremos a esta página al enviarlo.
+            </p>
+          </noscript>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div class="footer__brand">
+        <a class="brand brand--light" href="#inicio" aria-label="Aroma &amp; Código, volver al inicio">
+          <span class="brand__mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 9h12v6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9Z"/>
+              <path d="M16 10h2.5a2.5 2.5 0 0 1 0 5H16"/>
+              <path d="M7 5c0-.8.7-1.2.7-2M11 5c0-.8.7-1.2.7-2"/>
+            </svg>
+          </span>
+          <span class="brand__name">Aroma <span class="brand__amp">&amp;</span> Código</span>
+        </a>
+        <p class="footer__tagline">Café de especialidad, repostería artesanal y un buen lugar para quedarse.</p>
+      </div>
+
+      <nav class="footer__nav" aria-label="Navegación del pie de página">
+        <h2 class="footer__heading">Explorar</h2>
+        <ul class="footer__list">
+          <li><a href="#carta">Carta</a></li>
+          <li><a href="#nosotros">Nosotros</a></li>
+          <li><a href="#testimonios">Testimonios</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer__social">
+        <h2 class="footer__heading">Seguinos</h2>
+        <ul class="footer__list">
+          <li><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+          <li><a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+          <li><a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer">TikTok</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer__bottom">
+      <p>© <span id="year">2026</span> Café Aroma &amp; Código. Todos los derechos reservados.</p>
+      <p class="footer__note">Proyecto académico · HTML5 semántico y CSS3</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js" defer></script>
+</body>
+</html>
