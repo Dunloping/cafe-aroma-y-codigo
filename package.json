@@ -11,6 +11,7 @@
     "dev:vercel": "vercel dev",
     "dev:local": "node --env-file-if-exists=.env.local scripts/dev-server.mjs",
     "db:init": "node --env-file-if-exists=.env.local scripts/init-db.js",
+    "hash-password": "node scripts/hash-password.mjs",
     "test": "node --test"
   },
   "dependencies": {
