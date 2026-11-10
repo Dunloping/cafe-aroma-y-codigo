@@ -5,6 +5,7 @@ sugerencias** que guarda cada mensaje en **PostgreSQL**. El sitio se despliega e
 **Vercel** como sitio estático + una función serverless que escribe en la base.
 
 **Sitio publicado:** <https://cafe-aroma-y-codigo.vercel.app>
+**Repositorio:** <https://github.com/Dunloping/cafe-aroma-y-codigo>
 
 ## Stack
 
