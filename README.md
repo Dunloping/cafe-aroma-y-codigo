@@ -92,16 +92,21 @@ select motivo, count(*) from contact_messages group by motivo;
 ## 2. Desarrollo local
 
 La landing se puede abrir con doble clic, pero el formulario necesita la función
-serverless. Para levantar todo junto:
+serverless. Hay dos formas de levantar todo junto:
 
 ```bash
+# Opción A — servidor propio, funciona en Windows sin permisos de symlink
+npm run dev:local       # http://127.0.0.1:3001
+
+# Opción B — Vercel CLI (falla en Windows si no está activado el modo desarrollador)
 npm install -g vercel   # una sola vez
 vercel login
-npm run dev             # equivale a: vercel dev
+npm run dev:vercel
 ```
 
-Vercel CLI lee `.env.local`, sirve `index.html` y monta `/api/contact` en
-`http://localhost:3000`.
+Ambos leen `.env.local`, sirven `index.html` y montan `/api/contact` contra la base
+real. `dev:local` solo expone `index.html`, `css/` y `js/`, nunca `.env.local` ni
+`node_modules`.
 
 ## 3. API
 

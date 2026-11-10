@@ -8,8 +8,9 @@
     "node": ">=20"
   },
   "scripts": {
-    "dev": "vercel dev",
-    "db:init": "node scripts/init-db.js",
+    "dev:vercel": "vercel dev",
+    "dev:local": "node --env-file-if-exists=.env.local scripts/dev-server.mjs",
+    "db:init": "node --env-file-if-exists=.env.local scripts/init-db.js",
     "test": "node --test"
   },
   "dependencies": {
