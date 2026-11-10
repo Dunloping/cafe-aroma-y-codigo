@@ -2,7 +2,6 @@ import http from "node:http";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import handler from "../api/contact.js";
 
 /**
  * Local development server for Windows, where `vercel dev` can fail with
@@ -30,7 +29,21 @@ const MIME = {
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://${req.headers.host || "localhost"}`);
 
-  if (url.pathname === "/api/contact") {
+  if (url.pathname.startsWith("/api/")) {
+    const route = url.pathname.slice("/api/".length);
+    const allowed = new Set([
+      "contact",
+      "admin/login",
+      "admin/logout",
+      "admin/messages",
+    ]);
+
+    if (!allowed.has(route)) {
+      res.statusCode = 404;
+      res.setHeader("Content-Type", "application/json; charset=utf-8");
+      return res.end(JSON.stringify({ ok: false, error: "not_found" }));
+    }
+
     const body = await readBody(req);
     if (body === null) {
       res.statusCode = 413;
@@ -39,6 +52,7 @@ const server = http.createServer(async (req, res) => {
     }
 
     req.body = body;
+    req.query = Object.fromEntries(url.searchParams);
     res.status = (code) => {
       res.statusCode = code;
       return res;
@@ -50,11 +64,13 @@ const server = http.createServer(async (req, res) => {
     };
 
     try {
-      await handler(req, res);
+      const module = await import(`../api/${route}.js`);
+      await module.default(req, res);
     } catch (error) {
       console.error("Local API error:", error);
       if (!res.headersSent) {
         res.statusCode = 500;
+        res.setHeader("Content-Type", "application/json; charset=utf-8");
         res.end(JSON.stringify({ ok: false, error: "server_error" }));
       }
     }
@@ -104,8 +120,19 @@ function resolveStatic(pathname) {
     return null;
   }
 
-  if (decoded === "/" || decoded === "/index.html") {
-    return path.join(root, "index.html");
+  if (
+    decoded === "/" ||
+    decoded === "/index.html" ||
+    decoded === "/admin.html" ||
+    decoded === "/favicon.svg"
+  ) {
+    const file =
+      decoded === "/admin.html"
+        ? "admin.html"
+        : decoded === "/favicon.svg"
+          ? "favicon.svg"
+          : "index.html";
+    return path.join(root, file);
   }
 
   const relative = decoded.replace(/^\/+/, "");

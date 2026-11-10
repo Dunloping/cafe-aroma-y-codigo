@@ -1208,7 +1208,6 @@ textarea {
 .field__input:focus {
   outline: none;
   border-color: var(--caramel);
-  box-shadow: 0 0 0 3px rgba(192, 123, 62, 0.22);
 }
 
 .field__input:focus-visible {
