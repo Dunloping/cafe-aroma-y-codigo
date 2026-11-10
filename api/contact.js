@@ -1,5 +1,6 @@
-import crypto from "node:crypto";
 import { getPool } from "../lib/db.js";
+import { asText, parseBody } from "../lib/http.js";
+import { hashIp } from "../lib/ip.js";
 import { validateContact } from "../lib/validation.js";
 
 const MAX_BODY_BYTES = 8_192;
@@ -111,36 +112,6 @@ export default async function handler(req, res) {
       message: "No pudimos guardar tu mensaje. Intentá de nuevo en unos minutos.",
     });
   }
-}
-
-function parseBody(body) {
-  if (!body) return {};
-  if (typeof body === "string") {
-    try {
-      const parsed = JSON.parse(body);
-      return parsed && typeof parsed === "object" ? parsed : null;
-    } catch {
-      return Object.fromEntries(new URLSearchParams(body));
-    }
-  }
-  return typeof body === "object" ? body : null;
-}
-
-function asText(value) {
-  return typeof value === "string" ? value : "";
-}
-
-function hashIp(req) {
-  const forwarded = String(req.headers["x-forwarded-for"] || "")
-    .split(",")[0]
-    .trim();
-  const ip = forwarded || req.socket?.remoteAddress || "unknown";
-  const salt = process.env.IP_HASH_SALT || "aroma-codigo";
-  return crypto
-    .createHash("sha256")
-    .update(`${salt}:${ip}`)
-    .digest("hex")
-    .slice(0, 32);
 }
 
 function respond(res, nativeForm, status, payload) {
