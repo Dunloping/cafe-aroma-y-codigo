@@ -1,10 +1,11 @@
 # Café Aroma & Código
 
-Landing page de una cafetería de barrio, ahora con **formulario de contacto y buzón de
-sugerencias** que guarda cada mensaje en **PostgreSQL**. El sitio se despliega en
-**Vercel** como sitio estático + una función serverless que escribe en la base.
+Landing page de una cafetería de barrio con **formulario de contacto y buzón de
+sugerencias** que guarda cada mensaje en **PostgreSQL**, más un **panel de
+administración** protegido para leerlos y marcarlos como leídos o respondidos.
 
 **Sitio publicado:** <https://cafe-aroma-y-codigo.vercel.app>
+**Panel:** <https://cafe-aroma-y-codigo.vercel.app/admin.html>
 **Repositorio:** <https://github.com/Dunloping/cafe-aroma-y-codigo>
 
 ## Stack
@@ -12,28 +13,45 @@ sugerencias** que guarda cada mensaje en **PostgreSQL**. El sitio se despliega e
 | Capa | Tecnología |
 | --- | --- |
 | Frontend | HTML5 semántico, CSS externo (sin framework), JavaScript sin dependencias |
-| Backend | Función serverless de Node.js (`api/contact.js`) |
+| Backend | Funciones serverless de Node.js (`api/contact.js`, `api/admin/*`) |
 | Base de datos | PostgreSQL (Neon, Supabase, Railway o local) con `pg` |
-| Deploy | Vercel (estático + función) |
+| Autenticación | Contraseña con scrypt + cookie de sesión firmada (HMAC) |
+| Deploy | Vercel (estático + funciones) |
 | Tests | `node --test` (runner nativo de Node) |
 
 ## Estructura
 
 ```
 .
-├── index.html            # Landing page (una sola página)
-├── css/styles.css        # Estilos, mobile-first
-├── js/main.js            # Menú móvil, animaciones y envío del formulario
+├── index.html              # Landing page (una sola página)
+├── admin.html              # Panel de mensajes (no indexado)
+├── css/
+│   ├── styles.css          # Estilos de la landing, mobile-first
+│   └── admin.css           # Estilos del panel
+├── js/
+│   ├── main.js             # Menú móvil, animaciones y envío del formulario
+│   └── admin.js            # Login, filtros y cambio de estado
 ├── api/
-│   └── contact.js        # POST /api/contact (validación + inserción SQL)
+│   ├── contact.js          # POST /api/contact
+│   └── admin/
+│       ├── login.js        # POST /api/admin/login
+│       ├── logout.js       # POST /api/admin/logout
+│       └── messages.js     # GET / PATCH /api/admin/messages
 ├── lib/
-│   ├── db.js             # Pool de PostgreSQL reutilizado entre invocaciones
-│   └── validation.js     # Normalización y validación del payload
-├── db/schema.sql         # Tabla contact_messages, índices y constraints
-├── scripts/init-db.js    # Aplica el esquema (npm run db:init)
-├── tests/api.test.js     # Tests del endpoint y de la validación
-├── env.example           # Variables de entorno de referencia
-└── vercel.json           # Configuración de la función y headers de seguridad
+│   ├── auth.js             # Hash scrypt, token HMAC y cookies
+│   ├── db.js               # Pool de PostgreSQL reutilizado entre invocaciones
+│   ├── http.js             # Parseo de body y helpers de texto
+│   ├── ip.js               # Hash de IP con sal
+│   └── validation.js       # Normalización y validación del formulario
+├── db/schema.sql           # Tablas, índices y constraints
+├── scripts/
+│   ├── init-db.js          # Aplica el esquema (npm run db:init)
+│   ├── dev-server.mjs      # Servidor local para Windows (npm run dev:local)
+│   └── hash-password.mjs   # Genera ADMIN_PASSWORD_HASH
+├── tests/                  # 21 tests (API pública, admin y auth)
+├── env.example             # Variables de entorno de referencia
+├── robots.txt              # Excluye /admin.html y /api/
+└── vercel.json             # Función, headers de seguridad y noindex
 ```
 
 ## 1. Base de datos
@@ -59,9 +77,11 @@ un Postgres local, etc.).
    npm run db:init
    ```
 
-   Debe imprimir `✔ Esquema aplicado: tabla contact_messages lista.`
+   El script crea `contact_messages` y `admin_login_attempts`.
 
-### Tabla `contact_messages`
+### Tablas
+
+`contact_messages`
 
 | Columna | Tipo | Notas |
 | --- | --- | --- |
@@ -76,6 +96,9 @@ un Postgres local, etc.).
 | `user_agent` | text | Hasta 300 caracteres |
 | `creado_en` | timestamptz | `now()` |
 
+`admin_login_attempts` registra los intentos fallidos del panel para el rate limit
+(IP hasheada + fecha). Las filas de más de dos días se limpian solas en cada login.
+
 Consultas útiles:
 
 ```sql
@@ -88,14 +111,14 @@ select id, motivo, nombre, correo, mensaje, estado, creado_en
 -- Marcar como respondido
 update contact_messages set estado = 'respondido' where id = 1;
 
--- Cantidad por motivo
-select motivo, count(*) from contact_messages group by motivo;
+-- Cantidad por estado
+select estado, count(*) from contact_messages group by estado;
 ```
 
 ## 2. Desarrollo local
 
-La landing se puede abrir con doble clic, pero el formulario necesita la función
-serverless. Hay dos formas de levantar todo junto:
+La landing se puede abrir con doble clic, pero el formulario y el panel necesitan las
+funciones serverless. Hay dos formas de levantar todo junto:
 
 ```bash
 # Opción A — servidor propio, funciona en Windows sin permisos de symlink
@@ -107,11 +130,11 @@ vercel login
 npm run dev:vercel
 ```
 
-Ambos leen `.env.local`, sirven `index.html` y montan `/api/contact` contra la base
-real. `dev:local` solo expone `index.html`, `css/` y `js/`, nunca `.env.local` ni
-`node_modules`.
+Ambos leen `.env.local`, sirven `index.html` y `admin.html`, y montan `/api/*` contra
+la base real. `dev:local` solo expone los archivos públicos: nunca `.env.local`,
+`node_modules` ni `scripts/`.
 
-## 3. API
+## 3. API pública
 
 ### `POST /api/contact`
 
@@ -138,11 +161,57 @@ nativo, sin JavaScript).
 | `429` | Más de 5 mensajes desde una misma IP en 10 minutos |
 | `500` | Base no configurada o error de escritura (mensaje genérico) |
 
-Protecciones implementadas: consultas parametrizadas, validación y normalización en
-servidor, límite de tamaño, honeypot (`website`), rate limit por hash de IP y
+Protecciones: consultas parametrizadas, validación y normalización en servidor,
+límite de tamaño, honeypot (`website`), rate limit por hash de IP y
 `Cache-Control: no-store`. Los logs nunca incluyen el contenido del mensaje.
 
-## 4. Deploy en Vercel
+## 4. Panel de administración
+
+Entrar a `/admin.html` con la contraseña del local (se comparte por fuera del
+repositorio). El panel muestra:
+
+- Totales por estado (nuevo, leído, respondido).
+- Filtros por estado y motivo, y búsqueda por nombre, correo o mensaje.
+- El mensaje completo con enlace `mailto:` para responder.
+- Botones para marcar leído, respondido o reabrir.
+
+### Cómo funciona la seguridad
+
+| Medida | Detalle |
+| --- | --- |
+| Contraseña | Hash **scrypt** en `ADMIN_PASSWORD_HASH` (`sal:hash`); nunca se guarda en claro |
+| Sesión | Cookie `HttpOnly`, `SameSite=Strict`, `Secure` en Vercel, 8 horas |
+| Firma | HMAC-SHA256 del vencimiento con `ADMIN_SESSION_SECRET` (mínimo 32 caracteres) |
+| Rate limit | 10 intentos fallidos cada 15 minutos por IP hasheada |
+| CSRF | `SameSite=Strict` + verificación de `Origin` en `PATCH` |
+| Indexación | `noindex` en la página, `X-Robots-Tag` y `robots.txt` |
+
+El token no se guarda en la base: se valida la firma en cada request, así que el panel
+funciona igual con varias instancias serverless.
+
+### Endpoints
+
+| Método | Ruta | Descripción |
+| --- | --- | --- |
+| `POST` | `/api/admin/login` | Valida la contraseña y setea la cookie |
+| `POST` | `/api/admin/logout` | Borra la cookie |
+| `GET` | `/api/admin/messages` | Lista con `estado`, `motivo`, `q` y `limit` (máx. 100) |
+| `PATCH` | `/api/admin/messages` | `{ "id": 4, "estado": "respondido" }` |
+
+Sin cookie válida devuelven `401`; sin configuración de admin, `503`.
+
+### Cambiar la contraseña
+
+```bash
+npm run hash-password
+# pegar el hash en Vercel:
+vercel env add ADMIN_PASSWORD_HASH production --sensitive --force
+vercel env add ADMIN_PASSWORD_HASH preview --sensitive --force
+vercel env add ADMIN_PASSWORD_HASH development --sensitive --force
+vercel --prod
+```
+
+## 5. Deploy en Vercel
 
 ```bash
 npm install -g vercel
@@ -151,23 +220,19 @@ vercel          # preview
 vercel --prod   # producción
 ```
 
-Luego, en **Project → Settings → Environment Variables**, agregar para
-*Production* y *Preview*:
+Variables de entorno (Production, Preview y Development):
 
-- `DATABASE_URL`
-- `PGSSL` (`require`, o `disable` para un Postgres local sin TLS)
-- `IP_HASH_SALT` (cadena aleatoria larga)
+| Variable | Para qué |
+| --- | --- |
+| `DATABASE_URL` | Conexión Postgres (la inyecta la integración de Neon) |
+| `IP_HASH_SALT` | Sal para hashear IPs del formulario y del login |
+| `ADMIN_PASSWORD_HASH` | Hash scrypt de la contraseña del panel |
+| `ADMIN_SESSION_SECRET` | Secreto de firma de la cookie (32+ caracteres) |
+| `PGSSL` | Opcional: `disable` solo para un Postgres local sin TLS |
 
-Volver a desplegar para que la función tome las variables:
+Si se instala Neon desde el Marketplace, `DATABASE_URL` se inyecta automáticamente.
 
-```bash
-vercel --prod
-```
-
-Si se instala Neon desde el Marketplace de Vercel, la variable `DATABASE_URL` se
-inyecta automáticamente.
-
-## 5. Repositorio en GitHub
+## 6. Repositorio en GitHub
 
 ```bash
 git init -b main
@@ -176,23 +241,22 @@ git commit -m "feat: landing page with PostgreSQL contact form"
 gh repo create cafe-aroma-y-codigo --public --source=. --push
 ```
 
-Sin `gh`:
-
-1. Crear el repositorio vacío en GitHub (sin README ni .gitignore).
-2. `git remote add origin https://github.com/USUARIO/cafe-aroma-y-codigo.git`
-3. `git push -u origin main`
+Sin `gh`: crear el repositorio vacío en GitHub (sin README ni .gitignore), luego
+`git remote add origin https://github.com/USUARIO/cafe-aroma-y-codigo.git` y
+`git push -u origin main`.
 
 Para que Vercel despliegue en cada push: **Add New → Project → Import Git
-Repository**, elegir el repo y configurar las variables de entorno.
+Repository**, elegir el repo y configurar las variables.
 
-## 6. Verificación
+## 7. Verificación
 
 ```bash
 npm test
 ```
 
-8 tests: métodos no permitidos, errores por campo, honeypot, payload grande, respuesta
-sin base configurada, redirección del formulario nativo y normalización de datos.
+21 tests: validación del formulario, honeypot, payload grande, formulario nativo,
+hash y sesión del panel, login correcto/incorrecto, cookie `HttpOnly`, logout y
+permisos de los endpoints.
 
 Auditoría Lighthouse de la landing: 100 en accesibilidad, buenas prácticas y SEO.
 
@@ -202,3 +266,4 @@ Auditoría Lighthouse de la landing: 100 en accesibilidad, buenas prácticas y S
 - El formulario pide consentimiento explícito y no comparte datos con terceros.
 - Sin JavaScript la página sigue siendo navegable y el formulario se envía igual,
   volviendo a la página con un aviso.
+- La contraseña del panel no se versiona: vive en Vercel como secreto.
