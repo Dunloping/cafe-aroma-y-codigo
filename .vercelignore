@@ -1,0 +1,6 @@
+tests/
+scripts/
+db/
+README.md
+env.example
+*.pdf
